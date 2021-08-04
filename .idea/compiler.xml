@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ProxyDetail" />
+        <module name="rmi_rpc_server" />
+        <module name="rmi_rpc_client" />
+        <module name="rmi_rpc_api" />
       </profile>
     </annotationProcessing>
   </component>
