@@ -21,7 +21,7 @@ public class Main {
         FirstInterfacce firstInterfacce = new FirstRMIImpl();
         LocateRegistry.createRegistry(9999);
         // 绑定到注册中心，格式是rmi://ip:port/path  ，使用rebind也是可以的
-        Naming.bind("rmi://localhost:9999/first", firstInterfacce);
+        Naming.bind("rmi://localhost:9999/first", firstInterfacce); // 但是现在你的客户端需要知道这个地址才可以，很可能出错，所以得引入注册中心（数据库存储也可以）
         System.out.println("服务器启动完毕...");
 
         // 通常走到这里应该代码结束了，但是这里是一直阻塞的，
