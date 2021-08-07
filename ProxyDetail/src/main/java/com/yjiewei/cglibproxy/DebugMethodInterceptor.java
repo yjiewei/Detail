@@ -6,7 +6,7 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * 自定义的方法拦截器
+ * 2.自定义的方法拦截器
  * @author yjiewei
  * @date 2021/8/3
  */
@@ -24,7 +24,7 @@ public class DebugMethodInterceptor implements MethodInterceptor {
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         // 增强方法
         System.out.println( method + "调用前处理...");
-        Object result = methodProxy.invokeSuper(o, objects);
+        Object result = methodProxy.invokeSuper(o, objects); // 这里也说明是生成的代理对象是被代理类的子类实例
         System.out.println("调用方法后处理...");
         return result;
     }

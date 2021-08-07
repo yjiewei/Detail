@@ -3,6 +3,7 @@ package com.yjiewei.cglibproxy;
 import net.sf.cglib.proxy.Enhancer;
 
 /**
+ * 3.通过enhancer类创建代理类，生成一个被代理类的子类来拦截被代理类的方法调用
  * @author yjiewei
  * @date 2021/8/3
  */

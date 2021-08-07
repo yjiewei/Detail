@@ -10,6 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>ProxyDetail</module>
+      <module>rmi_rpc</module>
   </modules>
 
   <name>Detail</name>
