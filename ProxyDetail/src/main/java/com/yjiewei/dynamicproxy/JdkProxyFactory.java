@@ -5,6 +5,7 @@ import java.lang.reflect.Proxy;
 /**
  * 获取代理对象的工厂
  * 要代理其他对象，你得告诉工厂他的信息啊
+ * 此外，动态代理只能代理实现了接口的类
  * @author yjiewei
  * @date 2021/8/3
  */
