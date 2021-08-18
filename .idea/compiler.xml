@@ -14,6 +14,7 @@
         <module name="rmi_rpc_server" />
         <module name="rmi_rpc_api" />
         <module name="redis_lock" />
+        <module name="Ajax" />
       </profile>
     </annotationProcessing>
   </component>
