@@ -60,6 +60,8 @@ public class IndexController {
         // 1.这个相当于一把锁，控制只能一个人来
         String lockKey = "product001";
         RLock lock = redisson.getLock(lockKey); // 3.1
+        long startMillis = 0;
+        long endMillis = 0;
         try{
 /*
             // 2.获取锁
@@ -77,6 +79,7 @@ public class IndexController {
 
             // 3.1 解决过期时间内还未完成操作的问题
             lock.lock(30, TimeUnit.SECONDS); // 先拿锁，再设置超时时间
+            startMillis = System.currentTimeMillis();
 
             // 4.真正操作商品库存
             synchronized (this){
@@ -89,6 +92,7 @@ public class IndexController {
                     System.out.println("扣减失败，库存不足！");
                 }
             }
+            endMillis = System.currentTimeMillis();
         }finally {
             lock.unlock(); // 释放锁
 /*
@@ -97,6 +101,7 @@ public class IndexController {
                 stringRedisTemplate.delete(lockKey);
             }
 */
+            System.out.println("200个库存 同步时，耗时: " + (endMillis - startMillis));
         }
         return "end";
     }
