@@ -1,2 +1,5 @@
 # Project exclude paths
 /ProxyDetail/target/
+
+./.idea
+./Detail.iml
