@@ -12,6 +12,7 @@
     <module>ProxyDetail</module>
     <module>rmi_rpc</module>
     <module>Ajax</module>
+    <module>LeetCode</module>
   </modules>
 
   <name>Detail</name>

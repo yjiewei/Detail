@@ -15,6 +15,7 @@
         <module name="rmi_rpc_api" />
         <module name="redis_lock" />
         <module name="Ajax" />
+        <module name="LeetCode" />
       </profile>
     </annotationProcessing>
   </component>
