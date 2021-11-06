@@ -10,6 +10,7 @@
         <module name="rmi_rpc_client" />
         <module name="seckill" />
         <module name="jwt" />
+        <module name="JSP" />
         <module name="ProxyDetail" />
         <module name="rmi_rpc_server" />
         <module name="rmi_rpc_api" />
