@@ -13,6 +13,7 @@
     <module>rmi_rpc</module>
     <module>Ajax</module>
     <module>LeetCode</module>
+    <module>Basic</module>
   </modules>
 
   <name>Detail</name>

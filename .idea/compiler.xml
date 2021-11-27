@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Basic" />
         <module name="rmi_rpc_client" />
         <module name="seckill" />
         <module name="jwt" />
