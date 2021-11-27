@@ -34,8 +34,8 @@ public class EnumTest {
  */
 class Season{
     // 1.声明Season对象的属性
-    private String seasonName;
-    private String seasonDesc;
+    private final String seasonName;
+    private final String seasonDesc;
 
     // 2.私有化类构造器，并给对象属性赋值
     private Season(String seasonName, String seasonDesc) {
