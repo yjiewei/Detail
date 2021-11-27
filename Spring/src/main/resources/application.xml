@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--注入到容器中，并设置示例对象值-->
+    <bean id="person" class="com.yjiewei.Person">
+        <constructor-arg index="0" value="杨杰炜"/>
+        <constructor-arg index="1" value="23"/>
+    </bean>
+</beans>
