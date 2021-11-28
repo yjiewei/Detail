@@ -6,7 +6,14 @@
 
     <!--注入到容器中，并设置示例对象值-->
     <bean id="person" class="com.yjiewei.Person">
-        <constructor-arg index="0" value="杨杰炜"/>
-        <constructor-arg index="1" value="23"/>
+        <!-- 1.这里如果没有空参构造器就会让你设置值；所以这里相当于通过xml构造器的方式设置属性-->
+        <!--  <constructor-arg index="0" value="杨杰炜"/>-->
+        <!--  <constructor-arg index="1" value="23"/>-->
+
+        <!-- 2.通过property完成属性注入-->
+        <property name="name" value="yjiewei"/>
+        <property name="age" value="23"/>
+
+        <!-- 3.p名称空间注入 其实就是简化property-->
     </bean>
 </beans>

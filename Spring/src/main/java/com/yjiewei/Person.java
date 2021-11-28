@@ -14,6 +14,32 @@ public class Person {
         this.age = age;
     }
 
+    /**
+     * 空参构造器，不然xml中需要设置属性
+     */
+    public Person() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * 通过set设置属性值
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
