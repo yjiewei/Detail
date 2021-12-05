@@ -16,4 +16,21 @@
 
         <!-- 3.p名称空间注入 其实就是简化property-->
     </bean>
+
+    <bean id="userService" class="com.yjiewei.service.UserService">
+        <!--这里注入外部bean对象-->
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userDao" class="com.yjiewei.dao.impl.UserDaoImpl"/>
+
+    <!--虽然这里返回的是myBean，但是由于当前类实现了工程bean，返回类型会被重新定义，具体看类泛型-->
+    <bean id="myBean" class="com.yjiewei.factoryBean.MyBean" scope="prototype"/>
+
+    <bean id="user" class="com.yjiewei.User" init-method="initMethod" destroy-method="destroy" >
+        <property name="username" value="yjiewei"/>
+    </bean>
+
+    <!--配置后置处理器，会把当前配置文件的所有bean都加上后置处理器-->
+    <bean id="userPost" class="com.yjiewei.UserPost"/>
 </beans>

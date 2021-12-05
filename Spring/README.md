@@ -51,7 +51,7 @@ ApplicationContext实现类
 - ClassPathXmlApplicationContext
 - FileSystemXmlApplicationContext
 
-注入属性值的三种方式
+1. 注入属性值的三种方式
 ```xml
     <!--注入到容器中，并设置示例对象值-->
     <bean id="person" class="com.yjiewei.Person">
@@ -67,7 +67,7 @@ ApplicationContext实现类
     </bean>
 ```
 
-xml注入其他数据类型（比如null，特殊字符）
+2. xml注入其他数据类型（比如null，特殊字符）
 ```xml
     <bean id="person" class="com.yjiewei.Person">
         <!--属性中设置null值-->
@@ -81,4 +81,128 @@ xml注入其他数据类型（比如null，特殊字符）
         <property name="age" value="23"/>
     </bean>
 ```
-11集
+3. xml注入外部bean
+```java
+public class UserService {
+    // 1.创建UserDao类型属性，生成set方法
+    // 2.再通过application.xml去注册bean对象，再userService bean中注入userDao
+    private UserDao userDao;
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void add() {
+        System.out.println("test service set dao");
+        userDao.update();
+    }
+}
+```
+```xml
+    <bean id="userService" class="com.yjiewei.service.UserService">
+        <!--这里注入外部bean对象-->
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="userDao" class="com.yjiewei.dao.impl.UserDaoImpl"/>
+```
+4. 注入属性-内部bean和级联赋值
+    1. 一对多的关系（部门与员工） 
+    ```XML
+   <!--这里是一个bean的属性，属性中指定bean，就变成在内部的方式，其实都一样-->
+    <property name="userDao">
+        <bean id="person" class="com.yjiewei.Person">
+            <property name="name" value="yjiewei"/>
+            <property name="age" value="23"/>
+        </bean>
+    </property>
+    ```
+   2. 级联赋值（其实就是在注入外部bean时对外部bean属性进行赋值）（或者是直接对外部bean的属性值直接赋值 eg person.age ）
+    
+5. 注入集合类型属性（数组, list, map, set）
+```xml
+    <!--数组属性值注入-->
+    <property name="courses">
+        <array>
+            <value>java</value>
+            <value>mysql</value>
+            <value>python</value>
+        </array>
+    </property>
+
+    <!--list属性值注入-->
+    <property name="courses">
+        <list>
+            <value>java</value>
+            <value>mysql</value>
+            <value>python</value>
+        </list>
+    </property>
+    
+    <!--map属性值注入-->
+    <property name="courses">
+        <map>
+            <entry key="java" value="java"/>
+            <entry key="java" value="java"/>
+        </map>
+    </property>
+        
+    <!--set属性值注入-->
+    <property name="courses">
+        <set>
+            <value>java</value>
+            <value>mysql</value>
+            <value>python</value>
+        </set>
+    </property>
+
+    <!--其他方式注入集合-->
+    <!--提取list集合类型属性注入使用，记得引入标签-->
+    <util:list id="bookList">
+        <value>杨杰炜</value>
+        <value>杨杰炜</value>
+        <value>杨杰炜</value>
+    </util:list>
+```
+
+6. bean管理（工厂bean） com.yjiewei.factoryBean.MyBean
+    1. spring中有两种类型的bean（普通bean，工厂bean）
+    2. 工厂bean在配置文件定义bean类型可以和返回类型不一样
+    
+7. bean的作用域
+    1. 设置bean实例是单实例还是多实例
+    2. 默认是单实例
+    3. scope
+    ```xml
+        <bean id="myBean" class="com.yjiewei.factoryBean.MyBean" scope="singleton"/>
+        <bean id="myBean" class="com.yjiewei.factoryBean.MyBean" scope="prototype"/>
+    ```
+
+8. bean的生命周期(创建到销毁) com.yjiewei.User
+   > 在第三步的时候可以用bean的后置处理器（实现接口BeanPostProcessor）
+    1. 通过构造器创建bean实例（无参数构造）
+    2. 为bean属性设置值和对其他bean引用（调用set方法）
+       
+       [3] bean实例传递给后置处理器方法 com.yjiewei.UserPost
+    3. 调用bean的初始化方法（配置初始化方法）
+       
+       [3] bean实例传递给后置处理器方法
+    4. bean可以使用了（获取到对象）
+    5. 容器关闭时，调用bean的销毁方法（需要配置销毁方法）
+    
+    ![img.png](img.png)
+   
+9. xml自动装配
+    ```xml
+    <bean id="userService" class="com.yjiewei.service.UserService" autowrie="byName">
+        <!--这里注入外部bean对象-->
+        <!--不用这种方式去装配，直接用autowire="byName" 只要名字对应上了就可以了-->
+        <!--还有byType不过不能出现多个同类型的bean-->
+        <!--<property name="userDao" ref="userDao"/>-->
+    </bean> 
+    ```
+
+10. 外部属性文件
+    1. 直接配置数据库信息
+    2. 引入外部属性文件配置数据库连接池
+    
+11. 基于注解的方式管理bean 20集
