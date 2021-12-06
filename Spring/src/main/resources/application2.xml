@@ -8,14 +8,6 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!--引入外部属性配置文件-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-
-    <!--配置数据库连接池-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="driverClassName" value="${prop.driverClass}"/>
-        <property name="url" value="${prop.url}"/>
-        <property name="username" value="${prop.username}"/>
-        <property name="password" value="${prop.password}"/>
-    </bean>
+    <!-- 1.开启组件扫描，可以用上层目录，也可以用逗号分隔多个包，这样就能扫描到注解了 -->
+    <context:component-scan base-package="com.yjiewei.service"/>
 </beans>
