@@ -205,4 +205,26 @@ public class UserService {
     1. 直接配置数据库信息
     2. 引入外部属性文件配置数据库连接池
     
-11. 基于注解的方式管理bean 20集
+11. 基于注解的方式管理bean(对象创建、属性注入)
+    1. 创建对象
+        - @Component
+        - @Service
+        - @Controller
+        - @Repository
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

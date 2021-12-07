@@ -1,5 +1,6 @@
 package com.yjiewei;
 
+import com.yjiewei.service.PersonService;
 import com.yjiewei.service.UserService;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -40,5 +41,15 @@ public class TestBean {
         // 2.获取bean对象
         Person person = (Person) applicationContext.getBean("person");
         System.out.println(person.toString());
+    }
+
+    // 测试第11个部分，0.导包 1.配置扫描目录 2.使用注解
+    @Test
+    public void test1() {
+        // 1.加载配置文件信息 这个文件需要放在resources下
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("application2.xml");
+        // 2.获取bean对象
+        PersonService personService = (PersonService) applicationContext.getBean("PersonService");
+        personService.update();
     }
 }
