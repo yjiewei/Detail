@@ -224,10 +224,34 @@ public class UserService {
     ```
 ---
 ## AOP
+1. 概念
+    - 百度啥都有
+    - 解耦解耦，全都是为了解耦
+    - 将日志记录、事务、异常、安全控制等从业务逻辑中抽离出来
+    - 这就是面向切面编程（可以不通过修改逻辑代码实现新的功能）
 
-
-
-
+2. AOP底层使用原理
+    1. 有两种情况动态代理(代理就是为了增强类的方法)
+        - 有接口的情况，使用JDK动态代理
+          ```java
+            // 创建该接口实现类代理对象
+            interface UserDao {
+                public void login();
+            }
+            class UserDaoImpl implements UserDao {
+                public void login(){
+                    // 实现登录过程
+                }
+            }
+          ```
+        - 没有接口的情况，使用CGLIB动态代理
+          
+          `创建当前类子类的代理对象`
+    
+    2. java.lang.reflect.Proxy
+       
+        `static Object newProxyInstance(ClassLoader loader, 类<?>[] interfaces, InvocationHandler h)返回指定的接口，将方法调用指定的调用处理程序的代理类的一个实例。`  
+       InvocationHandler是创建代理对象，写增强的部分
 
 
 
