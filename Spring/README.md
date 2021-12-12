@@ -253,8 +253,21 @@ public class UserService {
         `static Object newProxyInstance(ClassLoader loader, 类<?>[] interfaces, InvocationHandler h)返回指定的接口，将方法调用指定的调用处理程序的代理类的一个实例。`  
        InvocationHandler是创建代理对象，写增强的部分
 
-
-
+    3. 术语
+       - 连接点：类里面哪些方法可以被增强，这些方法称为连接点
+       - 切入点：实际被真正增强的方法，称为切入点
+       - 通知（增强）：实际增强的逻辑部分称为通知（增强）；通知有多种类型（前置后置环绕异常最终）
+       - 切面：是动作，把通知应用到切入点过程
+    
+    4. AOP操作（基于AspectJ）
+       - 基于AspectJ实现AOP操作
+            - xml
+            - 注解
+       - 引入依赖
+       - 切入点表达式
+            - 知道对哪个类方法进行增强
+            - execution([权限修饰符][返回类型][类全路径][方法名称]([参数列表]))
+            
 
 
 
