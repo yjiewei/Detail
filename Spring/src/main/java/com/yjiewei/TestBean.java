@@ -1,8 +1,11 @@
 package com.yjiewei;
 
+import com.yjiewei.config.SpringConfig;
 import com.yjiewei.service.PersonService;
 import com.yjiewei.service.UserService;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -49,6 +52,19 @@ public class TestBean {
         // 1.加载配置文件信息 这个文件需要放在resources下
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("application2.xml");
         // 2.获取bean对象
+        PersonService personService = (PersonService) applicationContext.getBean("PersonService");
+        personService.update();
+    }
+
+    /**
+     * 测试通过配置类来实现注解开发取代xml配置的方式
+     */
+    @Test
+    public void test2() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        User user = applicationContext.getBean("user", User.class);
+        System.out.println(user);
+
         PersonService personService = (PersonService) applicationContext.getBean("PersonService");
         personService.update();
     }

@@ -211,7 +211,20 @@ public class UserService {
         - @Service
         - @Controller
         - @Repository
-    
+    2. 使用配置类的方式注入bean
+    ```java
+        @Configuration
+        @ComponentScan(basePackages = {"com.yjiewei.service"}) // 这里我用com.yjiewei的时候出错了，不知道什么原因导致
+        public class SpringConfig {
+            @Bean
+            public User user(){
+                return new User();
+            }
+        }
+    ```
+---
+## AOP
+
 
 
 
