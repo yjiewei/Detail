@@ -268,8 +268,15 @@ public class UserService {
             - 知道对哪个类方法进行增强
             - execution([权限修饰符][返回类型][类全路径][方法名称]([参数列表]))
             
-
-
+## JdbcTemplate 
+1. 概念
+    - spring框架对JDBC的封装
+    - 可以简单实现对数据库的操作
+2. 使用
+    - 引入相关依赖 jdbc orm tx connector druid
+    - 配置文件中配置数据库连接池
+    - 创建jdbcTemplate对象，注入DataSource
+    - 创建service 和 dao类，在dao里面注入jdbcTemplate去使用 TODO
 
 
 
