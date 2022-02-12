@@ -37,6 +37,13 @@
             <artifactId>spring-aop</artifactId>
             <version>5.2.6.RELEASE</version>
         </dependency>
+        <!-- aspectjweaver 注意这里的范围不能写runtime -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -89,12 +96,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
-        <!-- spring-aop -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>5.3.9</version>
-        </dependency>
+<!--        &lt;!&ndash; spring-aop &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-aop</artifactId>-->
+<!--            <version>5.3.9</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

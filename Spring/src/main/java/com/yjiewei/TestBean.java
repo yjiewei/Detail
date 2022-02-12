@@ -1,10 +1,14 @@
 package com.yjiewei;
 
-import com.yjiewei.config.SpringConfig;
+
+import com.yjiewei.aop.anno.AnnoUser;
+import com.yjiewei.aop.xml.Book;
+import com.yjiewei.aop.xml.ConfigAOP;
 import com.yjiewei.service.PersonService;
-import com.yjiewei.service.UserService;
+
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -61,11 +65,41 @@ public class TestBean {
      */
     @Test
     public void test2() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext();// 要传入配置类
         User user = applicationContext.getBean("user", User.class);
         System.out.println(user);
 
         PersonService personService = (PersonService) applicationContext.getBean("PersonService");
         personService.update();
+    }
+
+    /**
+     * 测试用aspect注解方式实现AOP 可行
+     */
+    @Test
+    public void test3() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean1.xml");
+        AnnoUser user = context.getBean(AnnoUser.class);
+        user.add();
+    }
+
+    /**
+     * 测试用aspect配置文件的方式实现AOP 可行
+     */
+    @Test
+    public void test4() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean2.xml");
+        Book book = context.getBean(Book.class);
+        book.buy();
+    }
+
+    /**
+     * 测试完全使用aspect注解的方式实现AOP 可行
+     */
+    @Test
+    public void test5() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigAOP.class);
+        AnnoUser user = context.getBean(AnnoUser.class);
+        user.add();
     }
 }

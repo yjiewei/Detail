@@ -1,5 +1,6 @@
 package com.yjiewei.proxy;
 
+import com.yjiewei.proxy.impl.UserDao;
 import com.yjiewei.proxy.impl.UserDaoImpl;
 
 import java.lang.reflect.InvocationHandler;

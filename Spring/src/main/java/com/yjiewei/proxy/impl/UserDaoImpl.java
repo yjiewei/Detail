@@ -1,7 +1,5 @@
 package com.yjiewei.proxy.impl;
 
-import com.yjiewei.proxy.UserDao;
-
 /**
  * 2.创建接口实现类，实现方法
  * @author yjiewei

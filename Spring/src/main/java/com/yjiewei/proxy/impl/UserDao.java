@@ -1,4 +1,4 @@
-package com.yjiewei.proxy;
+package com.yjiewei.proxy.impl;
 
 /**
  * 演示动态代理 1.创建接口类
