@@ -36,7 +36,7 @@ public class TestLambda {
         // lambda写法
         printNum((value) -> value%2!=0);
 
-        // 练习3
+        // 练习3 alt+回车可以替换哦
         Integer result = typeConvert(new Function<String, Integer>() {
             @Override
             public Integer apply(String s) {

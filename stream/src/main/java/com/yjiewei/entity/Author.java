@@ -4,9 +4,14 @@
  */
 package com.yjiewei.entity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Author {
+    private Long id;
+    private String name;
+    private String introduction;
     private Integer age;
     private List<Book> bookList;
 
@@ -26,6 +31,41 @@ public class Author {
         this.bookList = bookList;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public Author() {
+    }
+
+    public Author(Long id, String name, String introduction, Integer age, List<Book> bookList) {
+        this.id = id;
+        this.name = name;
+        this.introduction = introduction;
+        this.age = age;
+        this.bookList = bookList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,13 +73,20 @@ public class Author {
 
         Author author = (Author) o;
 
+        if (id != null ? !id.equals(author.id) : author.id != null) return false;
+        if (name != null ? !name.equals(author.name) : author.name != null) return false;
+        if (introduction != null ? !introduction.equals(author.introduction) : author.introduction != null)
+            return false;
         if (age != null ? !age.equals(author.age) : author.age != null) return false;
         return bookList != null ? bookList.equals(author.bookList) : author.bookList == null;
     }
 
     @Override
     public int hashCode() {
-        int result = age != null ? age.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (introduction != null ? introduction.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (bookList != null ? bookList.hashCode() : 0);
         return result;
     }
