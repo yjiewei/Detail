@@ -6,17 +6,23 @@ package com.yjiewei;
 
 import com.yjiewei.entity.Author;
 import com.yjiewei.entity.Book;
+import org.junit.Test;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+@SuppressWarnings("ALL")
 public class TestStream {
     public static void main(String[] args) {
+
         List<Author> authors = getAuthors();
+
         // 1.年龄小于18岁的作家名字去重
         authors.stream().filter(new Predicate<Author>() {
             @Override
@@ -34,6 +40,7 @@ public class TestStream {
                 System.out.println(authorName);
             }
         });
+
         // 2.简化写法
         authors.stream() // 返回值是stream对象，也就是集合转流
                 .filter(author -> author.getAge() < 18) // 筛选条件
@@ -61,6 +68,10 @@ public class TestStream {
                 System.out.println(stringIntegerEntry.getValue());
             }
         });
+
+        // 5.其他练习，包括debug lambda表达式
+        System.out.println("======练习5======");
+        test();
     }
 
     // 初始化一些数据
@@ -94,5 +105,67 @@ public class TestStream {
         author5.setBookList(books2);
 
         return new ArrayList<>(Arrays.asList(author1, author2, author3, author4, author5));
+    }
+
+    static class Product{
+        int id;
+        String name;
+        Double price;
+        public Product(int id, String name, Double price) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+        }
+    }
+
+    private static void test() {
+        List<Product> productsList = new ArrayList<>();
+        //Adding Products
+        productsList.add(new Product(1, "HP Laptop", 25000d));
+        productsList.add(new Product(2, "Dell Laptop", 30000d));
+        productsList.add(new Product(3, "Lenovo Laptop", 28000d));
+        productsList.add(new Product(4, "Sony Laptop", 28000d));
+        productsList.add(new Product(5, "Apple Laptop", 90000d));
+        // This is more compact approach for filtering data
+        Double totalPrice = productsList.stream()
+                .map(product->product.price)
+                // 第一个参数是累加类型 第二是累加表达式 累加到sum
+                .reduce(0.0D, new BinaryOperator<Double>() {
+                    @Override
+                    public Double apply(Double total, Double price) {
+                        return total + price;
+                    }
+                });
+        System.out.println(totalPrice);
+        // More precise code
+        Double totalPrice2 = productsList.stream()
+                .map(product->product.price)
+                // 简单理解就是上一个map方法之后只拿到price值，这里全加起来
+                .reduce(0.0D, Double::sum);
+        System.out.println(totalPrice2);
+
+        System.out.println("======");
+        // 过滤，获取数据，收集成list
+        List<Double> productPriceList2 =productsList.stream()
+                .filter(p -> p.price > 30000)
+                .map(p->p.price)
+                .collect(Collectors.toList());
+        System.out.println(productPriceList2);
+
+        // 常规操作
+        long count = productsList.stream().filter(p -> p.price < 30000)
+                .map(p -> p.name)
+                .distinct()
+                .count();
+        System.out.println(count);
+
+        Set<Double> productPriceListSet = productsList.stream().filter(p -> p.price > 30000)
+                .map(p -> p.price)
+                .distinct().collect(Collectors.toSet());
+        System.out.println(productPriceListSet);
+
+        productsList.stream().filter(p -> p.price < 30000)
+                .map(p -> p.name)
+                .distinct().forEach(System.out::println);
     }
 }
