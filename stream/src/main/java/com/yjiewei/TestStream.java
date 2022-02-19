@@ -6,8 +6,10 @@ package com.yjiewei;
 
 import com.yjiewei.entity.Author;
 import com.yjiewei.entity.Book;
+import com.yjiewei.entity.Product;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
@@ -24,6 +26,68 @@ public class TestStream {
         List<Author> authors = getAuthors();
 
         // 1.年龄小于18岁的作家名字去重
+        test6(authors);
+
+        // 2.简化写法
+        test5(authors);
+
+
+        // 3.数组转stream，前面是list集合
+        test4();
+
+        // 4.map转stream 得先转换成单列集合才行
+        test3();
+
+        // 5.其他练习，包括debug lambda表达式
+        System.out.println("======练习5======");
+        test();
+
+        test1();
+
+        test2();
+
+        test7();
+
+        test8();
+
+        test9();
+    }
+
+    /**
+     * 打印现有数据的所有分类，去重，不能出现格式 哲学,爱情 这种拼接的
+     */
+    private static void test9() {
+        System.out.println("flatmap again");
+        getAuthors().stream().flatMap(author -> author.getBookList().stream())
+                .flatMap(book -> Arrays.stream(book.getCategory().split(",")))
+                .distinct().forEach(System.out::println);
+    }
+
+    /**
+     * 打印所有书籍的名字，去重
+     */
+    private static void test8() {
+        System.out.println("test flatMap");
+        getAuthors().stream()
+                .flatMap(new Function<Author, Stream<Book>>() {
+                    @Override
+                    public Stream<Book> apply(Author author) {
+                        return author.getBookList().stream();
+                    }
+                })
+                .distinct() // 去掉相同的书籍
+                .forEach(book -> System.out.println(book.getName()));
+    }
+
+    /**
+     * 年龄最大的作家外，不能重复，年龄降序
+     */
+    private static void test7() {
+        List<Author> authors = getAuthors();
+        authors.stream().sorted().skip(1).forEach(author -> System.out.println(author.getAge()));
+    }
+
+    private static void test6(List<Author> authors) {
         authors.stream().filter(new Predicate<Author>() {
             @Override
             public boolean test(Author author) {
@@ -40,23 +104,25 @@ public class TestStream {
                 System.out.println(authorName);
             }
         });
+    }
 
-        // 2.简化写法
+    private static void test5(List<Author> authors) {
         authors.stream() // 返回值是stream对象，也就是集合转流
                 .filter(author -> author.getAge() < 18) // 筛选条件
                 .map(Author::getName) // 只要名字
                 .distinct() // 去重，这里不能放在前面，不然比较的是author元素不是名字
                 .forEach(System.out::println); // 遍历输出
+    }
 
-
-        // 3.数组转stream，前面是list集合
+    private static void test4() {
         System.out.println("========");
         Integer[] arr = {1,2,3,4};
         Stream<Integer> arr1 = Stream.of(arr); // 利用Stream的静态方法
         arr1.forEach(System.out::println);
         Stream<Integer> arr2 = Arrays.stream(arr);
+    }
 
-        // 4.map转stream 得先转换成单列集合才行
+    private static void test3() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("波吉", 15);
         map.put("卡克", 14);
@@ -68,16 +134,39 @@ public class TestStream {
                 System.out.println(stringIntegerEntry.getValue());
             }
         });
+    }
 
-        // 5.其他练习，包括debug lambda表达式
-        System.out.println("======练习5======");
-        test();
+    /**
+     * 年龄降序，不能重复，打印年龄最大的两个作家名字
+     */
+    private static void test2() {
+        List<Author> authors = getAuthors();
+        authors.stream().distinct().sorted().limit(2).forEach(author -> System.out.println(author.getName()));
+    }
+
+    // 对流中的元素按照年龄进行降序排序，并且要求不能有重复元素
+    private static void test1() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .distinct()
+                //.map(author -> author.getAge()) // 这个是比较年龄
+                .sorted() // 可以注释这一行看看什么情况
+                .forEach(author -> System.out.println(author.getAge()));
+
+        System.out.println("==========");
+
+        authors.stream().distinct().sorted(new Comparator<Author>() {
+            @Override
+            public int compare(Author o1, Author o2) {
+                return o2.getAge() - o1.getAge();
+            }
+        }).forEach(author -> System.out.println(author.getAge()));
     }
 
     // 初始化一些数据
     private static List<Author> getAuthors() {
         Author author1 = new Author(1L, "杨杰炜", "my introduction 1", 18, null);
-        Author author2 = new Author(2L, "yjw", "my introduction 2", 15, null);
+        Author author2 = new Author(2L, "yjw", "my introduction 2", 35, null);
         Author author3 = new Author(3L, "yjw", "my introduction 3", 14, null);
         Author author4 = new Author(4L, "wdt", "my introduction 4", 19, null);
         Author author5 = new Author(5L, "wtf", "my introduction 5", 12, null);
@@ -87,7 +176,7 @@ public class TestStream {
         List<Book> books3 = new ArrayList<>();
 
         // 上面是作者和书
-        books1.add(new Book(1L, "类别", "书名1", 45D, "这是简介哦"));
+        books1.add(new Book(1L, "类别,分类啊", "书名1", 45D, "这是简介哦"));
         books1.add(new Book(2L, "高效", "书名2", 84D, "这是简介哦"));
         books1.add(new Book(3L, "喜剧", "书名3", 83D, "这是简介哦"));
 
@@ -107,17 +196,6 @@ public class TestStream {
         return new ArrayList<>(Arrays.asList(author1, author2, author3, author4, author5));
     }
 
-    static class Product{
-        int id;
-        String name;
-        Double price;
-        public Product(int id, String name, Double price) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-        }
-    }
-
     private static void test() {
         List<Product> productsList = new ArrayList<>();
         //Adding Products
@@ -128,7 +206,7 @@ public class TestStream {
         productsList.add(new Product(5, "Apple Laptop", 90000d));
         // This is more compact approach for filtering data
         Double totalPrice = productsList.stream()
-                .map(product->product.price)
+                .map(product->product.getPrice())
                 // 第一个参数是累加类型 第二是累加表达式 累加到sum
                 .reduce(0.0D, new BinaryOperator<Double>() {
                     @Override
@@ -139,7 +217,7 @@ public class TestStream {
         System.out.println(totalPrice);
         // More precise code
         Double totalPrice2 = productsList.stream()
-                .map(product->product.price)
+                .map(product -> product.getPrice())
                 // 简单理解就是上一个map方法之后只拿到price值，这里全加起来
                 .reduce(0.0D, Double::sum);
         System.out.println(totalPrice2);
@@ -147,25 +225,25 @@ public class TestStream {
         System.out.println("======");
         // 过滤，获取数据，收集成list
         List<Double> productPriceList2 =productsList.stream()
-                .filter(p -> p.price > 30000)
-                .map(p->p.price)
+                .filter(p -> p.getPrice() > 30000)
+                .map(p->p.getPrice())
                 .collect(Collectors.toList());
         System.out.println(productPriceList2);
 
         // 常规操作
-        long count = productsList.stream().filter(p -> p.price < 30000)
-                .map(p -> p.name)
+        long count = productsList.stream().filter(p -> p.getPrice() < 30000)
+                .map(p -> p.getName())
                 .distinct()
                 .count();
         System.out.println(count);
 
-        Set<Double> productPriceListSet = productsList.stream().filter(p -> p.price > 30000)
-                .map(p -> p.price)
+        Set<Double> productPriceListSet = productsList.stream().filter(p -> p.getPrice() > 30000)
+                .map(p -> p.getPrice())
                 .distinct().collect(Collectors.toSet());
         System.out.println(productPriceListSet);
 
-        productsList.stream().filter(p -> p.price < 30000)
-                .map(p -> p.name)
+        productsList.stream().filter(p -> p.getPrice() < 30000)
+                .map(p -> p.getName())
                 .distinct().forEach(System.out::println);
     }
 }
