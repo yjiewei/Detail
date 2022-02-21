@@ -134,16 +134,22 @@ public void test1() {
 `OptionalObject.ifPresent()`
 
 3. 获取值
-- Optional.get() 这种方法不推荐，当Optional内部的方法为空时会出现异常
+- Optional.get() 这种方法不推荐，当Optional的get方法为空时会出现异常
 
 3.1 安全获取值
 - orElseGet:获取数据并且设置数据为空时的默认值，如果数据不为空就获取该数据，为空则获取默认值
-- 
+- orElseThrow
 
 4. 过滤
+- 我们可以使用filter方法对数据进行过滤，如果原来是有数据的，但是不符合判断，也会变成一个无数据的Optional对象
+- Optional.filter()
 
 5. 判断
+- Optional.isPresent() 判断数据是否存在，空则返回false，否则true，这种方式不是最好的，推荐使用Optional.ifPresent()
+- Optional.ifPresent()，上面isPresent不能体现Optional的优点
+- 使用的时候可以先判断，相当于先判空，再去get，这样就不会空指针了
 
 6. 数据转换
+- Optional还提供map可以对数据进行转换，并且转换得到的数据还是Optional包装好的，保证安全使用
 
 ### 5.函数式接口

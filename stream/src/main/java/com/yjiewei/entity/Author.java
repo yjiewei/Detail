@@ -4,10 +4,13 @@
  */
 package com.yjiewei.entity;
 
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ToString
 public class Author implements Comparable<Author>{
     private Long id;
     private String name;
