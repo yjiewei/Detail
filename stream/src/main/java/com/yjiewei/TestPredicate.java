@@ -10,6 +10,10 @@ import com.yjiewei.entity.Book;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class TestPredicate {
@@ -18,6 +22,80 @@ public class TestPredicate {
         testPredicateAnd();
 
         testPredicateOr();
+
+        testMethodReference();
+
+        testMethodReference2();
+
+        testParallel();
+    }
+
+    /**
+     * 测试并行流
+     * 还有一个方法就是 getAuthors.parallelStream()
+     */
+    private static void testParallel() {
+        Optional<Integer> reduce = getAuthors().stream().parallel() // 这里就用并行流来提高计算效率，只求最终结果一致
+                .map(Author::getAge)
+                .peek(new Consumer<Integer>() { // peek就检查当前操作
+                    @Override
+                    public void accept(Integer integer) {
+                        System.out.println(integer + Thread.currentThread().getName());
+                    }
+                })
+                .reduce(new BinaryOperator<Integer>() {
+                    @Override
+                    public Integer apply(Integer res, Integer value) {
+                        return res + value;
+                    }
+                });
+        System.out.println(reduce.get());
+    }
+
+    interface UseString{
+        String use(String str, int start, int length);
+    }
+
+    public static String subAuthorName(String str, UseString useString) {
+        int start = 0;
+        int length = 1;
+        return useString.use(str, start, length);
+    }
+
+    /**
+     * 这个例子就厉害了 好好学学
+     */
+    private static void testMethodReference2() {
+        subAuthorName("杨杰炜", String::substring); // 6.2.3 简洁
+        // 复杂版的写法是
+        subAuthorName("杨杰炜", new UseString() {
+            @Override
+            public String use(String str, int start, int length) {
+                return str.substring(start, length); // 第一个对象把后面两个按照顺序传入了，所以可以直接简化
+            }
+        });
+    }
+
+    private static void testMethodReference() {
+
+        getAuthors().stream()
+                .map(author -> author.getAge())
+                .map(new Function<Integer, String>() { // 这个方法就能用 6.2.1 的写法 .map(String::valueOf)
+                    // 这个就是重写方法
+                    @Override
+                    public String apply(Integer integer) { // 注意这个方法参数
+                        return String.valueOf(integer); // 方法体中只有一个方法，参数传进去这个静态方法了
+                    }
+                });
+
+        getAuthors().stream()
+                .map(author -> author.getAge())
+                .forEach(new Consumer<Integer>() { // 6.2.2 简化成 System.out::println
+                    @Override
+                    public void accept(Integer integer) {
+                        System.out.println(integer); // 某个对象的成员方法，并传入了参数
+                    }
+                });
     }
 
     /**
