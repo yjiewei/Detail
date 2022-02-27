@@ -4,9 +4,11 @@
  */
 package com.yjiewei.mapstruct;
 
+import com.yjiewei.mapstruct.convert.CarConvert;
 import com.yjiewei.mapstruct.dto.CarDTO;
 import com.yjiewei.mapstruct.dto.DriverDTO;
 import com.yjiewei.mapstruct.dto.PartDTO;
+import com.yjiewei.mapstruct.vo.CarVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,10 +33,14 @@ public class MapStructTest {
 
         // 转换成VO 如果用传统的方式，这里hasPart是匹配不上的，需要手动判断
         System.out.println(carDTO.toString());
+        CarVO carVO = CarConvert.INSTANCE.carDtoToVo(carDTO);
+        System.out.println(carVO.toString());
+
+        // 如果是list集合的DTO，可以定义在convert中去实现转换，方法名+s,然后参数都换成List
 
     }
 
-    private CarDTO buildCarDTO() {
+    private static CarDTO buildCarDTO() {
         DriverDTO driverDTO = new DriverDTO();
         driverDTO.setId(2L);
         driverDTO.setName("司机1");
@@ -50,9 +56,9 @@ public class MapStructTest {
         return CarDTO.builder()
                 .id(1L)
                 .brand("无印良品")
-                .price(12.00)
+                .price(12.052D)
                 .vin("vin123")
-                .totalPrice(100.00)
+                .totalPrice(100.00454515D)
                 .publishDate(new Date())
                 .driverDTO(driverDTO)
                 .partDTOS(partDTOS)
