@@ -10,4 +10,4 @@
 
 接下来是学一个尚硅谷的新项目 https://www.bilibili.com/video/BV1V5411K7rT
 
-我的GitHub项目地址是 https://github.com/yjiewei/yygh_parent
+我的Gitee项目地址是 https://gitee.com/jaysony/yygh_parent
