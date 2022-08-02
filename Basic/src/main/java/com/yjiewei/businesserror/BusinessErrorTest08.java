@@ -17,9 +17,9 @@ import java.util.stream.IntStream;
  * https://github.com/JosephZhu1983/java-common-mistakes
  * https://projectlombok.org/features/Data
  */
-public class BusinessErrorTest {
+public class BusinessErrorTest08 {
 
-    private static final Log log = LogFactory.getLog(BusinessErrorTest.class);
+    private static final Log log = LogFactory.getLog(BusinessErrorTest08.class);
     public static final int SIZE = 10000000;
 
     /**
