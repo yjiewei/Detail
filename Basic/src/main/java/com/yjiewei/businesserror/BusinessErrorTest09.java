@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 /**
  * @author yjiewei
  * @date 2022/8/1
@@ -29,5 +31,14 @@ public class BusinessErrorTest09 {
         System.out.println("出现这种问题的主要原因是，计算机是以二进制存储数值的，浮点数也不例外");
         System.out.println("0.1 的二进制表示为 0.0 0011 0011 0011… （0011 无限循环)，再转换为十进制就是 0.1000000000000000055511151231257827021181583404541015625。" +
                 "对于计算机而言，0.1 无法精确表达，这是浮点数计算造成精度损失的根源");
+
+        System.out.println("\nBigDecimal 类型，浮点数精确表达和运算的场景，一定要使用这个类型");
+
+        System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));
+        System.out.println(new BigDecimal(1.0).subtract(new BigDecimal(0.8)));
+        System.out.println(new BigDecimal(4.015).multiply(new BigDecimal(100)));
+        System.out.println(new BigDecimal(123.3).divide(new BigDecimal(100)));
+
+        System.out.println("即使用了BigDecimal类型，也不是那么准确，只不过精度提高了。");
     }
 }
