@@ -12,9 +12,9 @@
 
 2022/08/24
 
-尚医通项目后台已经更新完了，接下来的计划是学习在线支付，代码地址在下面，一起学习呀
+尚医通项目后台已经更新完了，接下来的计划是学习在线支付，代码地址在下面，欢迎fork一起学习呀！
 
-用码云更新项目是因为GitHub访问速度实在太慢了！
+用码云更新项目是因为GitHub访问速度实在太慢了！漏漏漏 大漏特漏，同步更新GitHub，Gitee，在网络好的时候同步GitHub。
 
 ---
 
@@ -29,6 +29,8 @@
 2. 在线支付
 
     视频地址：https://www.bilibili.com/video/BV1US4y1D77m
+
+    GitHub代码地址：https://github.com/yjiewei/payment-demo
     
     我的Gitee项目地址是 https://gitee.com/jaysony/payment-demo
 
