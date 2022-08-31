@@ -42,4 +42,23 @@ public class BusinessErrorTest10 {
         List<Integer> integerList = Arrays.asList(arr1);
         log.info("integerList:{} size:{} class:{}", integerList, integerList.size(), integerList.get(0).getClass());
     }
+
+
+    /**
+     * Arrays.asList 把数据转换为 List 的三个坑
+     * 2.Arrays.asList 返回的 List 不支持增删操作
+     */
+    @Test
+    public void test2() {
+        String[] arr = {"1", "2", "3"};
+        List list = Arrays.asList(arr);
+        arr[1] = "4";
+        try {
+            // UnsupportedOperationException，返回的并不是ArrayList，并没有add方法
+            list.add("5");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        log.info("arr:{} list:{}", Arrays.toString(arr), list);
+    }
 }
