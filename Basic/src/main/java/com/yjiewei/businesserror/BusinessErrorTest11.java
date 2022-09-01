@@ -67,7 +67,8 @@ public class BusinessErrorTest11 {
 
     @GetMapping("right")
     public int right(@RequestParam(value = "test", defaultValue = "1111") String test) {
-        return Optional.ofNullable(rightMethod(test.charAt(0) == '1' ? null : new FooService(),
+        // 如果没有实例化BarService，还是不能出现OK
+        return Optional.ofNullable(rightMethod(test.charAt(0) == '1' ? null : new FooService(new BarService()),
                 test.charAt(1) == '1' ? null : 1,
                 test.charAt(2) == '1' ? null : "OK",
                 test.charAt(3) == '1' ? null : "OK"))
@@ -78,6 +79,12 @@ public class BusinessErrorTest11 {
         @Getter
         private BarService barService;
 
+        public FooService() {
+        }
+
+        public FooService(BarService barService) {
+            this.barService = barService;
+        }
     }
 
     class BarService {
