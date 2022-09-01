@@ -46,12 +46,15 @@ public class BusinessErrorTest10 {
 
     /**
      * Arrays.asList 把数据转换为 List 的三个坑
-     * 2.Arrays.asList 返回的 List 不支持增删操作
+     * 2.Arrays.asList 返回的 List 不支持增删操作：返回的类型是Arrays类的内部类，未实现add操作
+     * 3.对原始数组的修改会影响到我们获得的那个 List：因为asList方法直接使用了原数组，直接共享
      */
     @Test
     public void test2() {
         String[] arr = {"1", "2", "3"};
         List list = Arrays.asList(arr);
+        // 修复坑3：新创建数组
+        // List list = new ArrayList(Arrays.asList(arr));
         arr[1] = "4";
         try {
             // UnsupportedOperationException，返回的并不是ArrayList，并没有add方法
