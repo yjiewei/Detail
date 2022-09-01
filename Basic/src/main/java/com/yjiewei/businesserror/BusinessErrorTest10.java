@@ -3,8 +3,10 @@ package com.yjiewei.businesserror;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -63,5 +65,24 @@ public class BusinessErrorTest10 {
             ex.printStackTrace();
         }
         log.info("arr:{} list:{}", Arrays.toString(arr), list);
+    }
+
+
+    private static List<List<Integer>> data = new ArrayList<>();
+
+    /**
+     * 未重现 oom情况
+     * 出现 OOM 的原因是，循环中的 1000 个具有 10 万个元素的 List 始终得不到回收，因为它始终被 subList 方法返回的 List 强引用
+     *
+     */
+    private static void oom() {
+        for (int i = 0; i < 1000; i++) {
+            List<Integer> rawList = IntStream.rangeClosed(1, 100000).boxed().collect(Collectors.toList());
+            data.add(rawList.subList(0, 1));
+        }
+    }
+
+    public static void main(String[] args) {
+        oom();
     }
 }
