@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 /**
  * List、Set、Map、Queue 可以从广义上统称为集合类数据结构，可以分为 Map 和 Collection 两大类。
  * 把数组转换为 List 集合、对 List 进行切片操作、List 搜索的性能问题等几个方面着手，来聊聊其中最可能遇到的一些坑
+ * https://github.com/JosephZhu1983/java-common-mistakes
  * @author yangjiewei
  * @date 2022/8/31
  */
@@ -83,6 +84,28 @@ public class BusinessErrorTest10 {
     }
 
     public static void main(String[] args) {
+        log.info("1.使用数据结构的时候，要考虑平衡时间和空间，收益和成本都是要考虑的");
+        log.info("2.不要过分迷信教科书中的大O时间复杂度，还得考虑使用场景");
+        log.info("2.1 LinkedList链表的随机访问时间复杂度是O(n)，插入操作其实也是O(n)，并不是我们想象中的O(1)，因为插入需要查找前一个节点，这里不能只考虑插入操作的耗时。");
         oom();
     }
+
+
+    /*
+    * Arrays.asList 得到的是 Arrays 的内部类 ArrayList，List.subList 得到的是 ArrayList 的内部类 SubList，不能把这两个内部类转换为 ArrayList 使用。
+    * Arrays.asList 直接使用了原始数组，可以认为是共享“存储”，而且不支持增删元素；List.subList 直接引用了原始的 List，也可以认为是共享“存储”，而且对原始 List 直接进行结构性修改会导致 SubList 出现异常。
+    * 对 Arrays.asList 和 List.subList 容易忽略的是，新的 List 持有了原始数据的引用，可能会导致原始数据也无法 GC 的问题，最终导致 OOM。
+    */
+
+    /*
+      问题1：调用类型是 Integer 的 ArrayList 的 remove 方法删除元素，传入一个 Integer 包装类的数字和传入一个 int 基本类型的数字，结果一样吗？
+            int类型是index，也就是索引，是按照元素位置删除的；Integer是删除某个元素，内部是通过遍历数组然后对比，找到指定的元素，然后删除；两个都需要进行数组拷贝，是通过System.arraycopy进行的。
+      问题2：循环遍历 List，调用 remove 方法删除元素，往往会遇到 ConcurrentModificationException 异常，原因是什么，修复方式又是什么呢？
+            以foreach为例说，遍历删除实质是变化为迭代器实现，不管是迭代器里面的remove()还是next()方法,都会checkForComodification();
+            而这个方法是判断modCount和expectedModCount是否相等，这个modCount是这个list集合修改的次数，每一次add或者remove都会增加这个变量，
+            然后迭代器每次去next或者去remove的时候检查checkForComodification();
+            发现expectedModCount(这个迭代器修改的次数)和modCount(这个集合实际修改的次数)不相等，
+            就会抛出ConcurrentModificationException，迭代器里面没有add方法，用迭代器时，可以删除原来集合的元素，
+            但是！一定要用迭代器的remove方法而不是集合自身的remove方法，否则抛异常。
+     */
 }
