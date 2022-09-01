@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,10 +30,12 @@ import java.util.stream.IntStream;
 public class BusinessErrorTest11 {
 
     private List<String> wrongMethod(FooService fooService, Integer i, String s, String t) {
+        // 4个参数都有可能导致下面这一行空指针，i可能是在拆箱的时候发现的，只有当特定参数时才会出现空指针，生产上不好重现。
         log.info("result {} {} {} {}", i + 1, s.equals("OK"), s.equals(t),
                 new ConcurrentHashMap<String, String>().put(null, null));
         if (fooService.getBarService().bar().equals("OK"))
             log.info("OK");
+        log.info("字符串比较时，字面量放在前面");
         return null;
     }
 
@@ -45,6 +45,33 @@ public class BusinessErrorTest11 {
                 test.charAt(1) == '1' ? null : 1,
                 test.charAt(2) == '1' ? null : "OK",
                 test.charAt(3) == '1' ? null : "OK").size();
+    }
+
+
+    /**
+     * 正确解决空指针的方法
+     * @param fooService
+     * @param i
+     * @param s
+     * @param t
+     * @return
+     */
+    private List<String> rightMethod(FooService fooService, Integer i, String s, String t) {
+        log.info("result {} {} {} {}", Optional.ofNullable(i).orElse(0) + 1, "OK".equals(s), Objects.equals(s, t), new HashMap<String, String>().put(null, null));
+        Optional.ofNullable(fooService)
+                .map(FooService::getBarService)
+                .filter(barService -> "OK".equals(barService.bar()))
+                .ifPresent(result -> log.info("OK"));
+        return new ArrayList<>();
+    }
+
+    @GetMapping("right")
+    public int right(@RequestParam(value = "test", defaultValue = "1111") String test) {
+        return Optional.ofNullable(rightMethod(test.charAt(0) == '1' ? null : new FooService(),
+                test.charAt(1) == '1' ? null : 1,
+                test.charAt(2) == '1' ? null : "OK",
+                test.charAt(3) == '1' ? null : "OK"))
+                .orElse(Collections.emptyList()).size();
     }
 
     class FooService {
