@@ -28,6 +28,11 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
  * 16 | 用好Java 8的日期时间类，少踩一些“老三样”的坑
  * JDK8用于计算时间和日期格式化都很强大，不能只盯着SimpleDateFormat，也得看看 java.time包下的东西
  * 看看当前目录下的 JAVA日期时间类型.webp 描述了日期时间类
+ *
+ * 用原生的似乎有些复杂了，可以用hutool工具来简化操作，
+ * https://www.hutool.cn/docs/#/core/日期时间/LocalDateTime工具-LocalDateTimeUtil
+ * https://apidoc.gitee.com/dromara/hutool/
+ * cn.hutool.core.date.LocalDateTimeUtil
  * @author yangjiewei
  * @date 2022/10/20
  */
