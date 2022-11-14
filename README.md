@@ -40,3 +40,22 @@
 
     我觉得这个项目是非常值得学习的，当然你得有一定基础，这里的接口流程以及我们对接第三方的时候系统应该如何设计，
     我觉得学习意义还是挺大的。
+    
+3. 谷粒商城（20221030开始，正在学习）
+    
+    视频地址：https://www.bilibili.com/video/BV1np4y1C7Yf
+    
+    GitHub代码地址：https://github.com/yjiewei/gulimall
+    
+    Gitee项目地址：https://gitee.com/jaysony/gulimall
+     
+4. Go语言学习（20221113开始，正在学习）
+
+    视频地址：https://www.bilibili.com/video/BV1zR4y1t7Wj
+    
+    GitHub代码地址：https://github.com/yjiewei/go
+    
+    Gitee项目地址：https://gitee.com/jaysony/go
+    
+    最近开始学习go，不过我不知道能不能坚持下去，学习的初衷是想换个赛道、补充技能包，java有点过于卷了。
+    
