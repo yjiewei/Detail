@@ -53,9 +53,9 @@
 
     视频地址：https://www.bilibili.com/video/BV1zR4y1t7Wj
     
-    GitHub代码地址：https://github.com/yjiewei/go
+    GitHub代码地址：https://github.com/yjiewei/Advanced
     
-    Gitee项目地址：https://gitee.com/jaysony/go
+    Gitee项目地址：https://gitee.com/jaysony/Advanced
     
     最近开始学习go，不过我不知道能不能坚持下去，学习的初衷是想换个赛道、补充技能包，java有点过于卷了。
     
